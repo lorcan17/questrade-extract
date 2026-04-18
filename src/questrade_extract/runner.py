@@ -97,9 +97,10 @@ def run() -> None:
         run_duration.record(time.perf_counter() - t0)
         run_status.set(status)
         try:
+            provider.force_flush(timeout_millis=10_000)
             provider.shutdown()
         except Exception:
-            logger.warning("OTel shutdown failed", exc_info=True)
+            logger.warning("OTel flush/shutdown failed", exc_info=True)
 
 
 if __name__ == "__main__":
